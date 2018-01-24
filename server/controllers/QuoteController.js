@@ -19,5 +19,18 @@ module.exports = {
   	logout: function(req,res){
 		req.session.destroy();
 		res.redirect("/");
- 	},
+	 },
+	 
+	 addQuote: function(req,res){
+		 console.log("breated!!!!")
+		 console.log("req!!", req.body)
+		 console.log("name!!", req.body.name)
+		 Quote.create({name: req.body.name, content: req.body.content, likes: req.body.likes}), function(err,quote){
+			console.log("Created!!!!", res.json(quotes)) 
+			console.log(err)
+			Quote.find({}).sort("-likes").exec(function(err, quotes){
+				 return res.json(quotes);
+			 })
+		 }
+	 }
 }

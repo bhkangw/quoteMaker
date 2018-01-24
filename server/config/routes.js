@@ -1,20 +1,24 @@
-var user = require("../controllers/QuoteController.js");
+var Quote = require("../controllers/QuoteController.js");
 var path = require("path");
 
 module.exports = function (app) {
 	app.post("/login", function (req, res) {
 		console.log("in backend routes")
-		user.login(req, res);
+		Quote.login(req, res);
 	});
 
 	app.get("/sess", function (req, res) {
 		console.log("in backend routes: checking session")
-		user.checkSess(req, res);
+		Quote.checkSess(req, res);
 	});
 
 	app.get("/logout", function (req, res) {
-		user.logout(req, res);
+		Quote.logout(req, res);
 	});
+
+	app.post("/addQuote", function (req, res) {
+		Quote.addQuote(req, res);
+	})
 
 	app.get("*", function (req, res) {
 		res.sendFile(path.resolve("./client/dist/index.html"));
