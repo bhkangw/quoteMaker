@@ -22,15 +22,32 @@ module.exports = {
 	 },
 	 
 	 addQuote: function(req,res){
-		 console.log("breated!!!!")
-		 console.log("req!!", req.body)
 		 console.log("name!!", req.body.name)
-		 Quote.create({name: req.body.name, content: req.body.content, likes: req.body.likes}), function(err,quote){
-			console.log("Created!!!!", res.json(quotes)) 
-			console.log(err)
+		 Quote.create({name: req.body.name, content: req.body.content, likes: req.body.likes}, function(err,quote){
+			console.log("Created!!!!") 
 			Quote.find({}).sort("-likes").exec(function(err, quotes){
 				 return res.json(quotes);
 			 })
-		 }
-	 }
+		 })
+	 },
+
+	 showAll: function(req,res){
+		 Quote.find({}).sort("-likes").exec(function (err, quotes) {
+			 return res.json(quotes);
+		 })
+	 },
+
+	 delete: function(req,res){
+		 console.log(req.params.id)
+		 Quote.remove({_id:req.params.id}, function(err, quotes){
+			res.redirect("/dashboard")
+		 })
+	 },
+
+	 like: function (req, res) {
+		Quote.findByIdAndUpdate(req.params.id, { $inc : { likes: 1 } }, function (err, quotes) {
+			console.log("Likes!!!!",Quote.likes)
+			res.redirect("/dashboard")
+		})
+	}
 }

@@ -10,4 +10,28 @@
     <div *ngIf="content.invalid && (content.dirty || content.touched)">Required</div><br>
     <button class="btn btn-success" type="submit" [disabled]="form.invalid">Add Quote</button>
   </form>
+</div><br>
+
+<div class="container">
+  <table class="table table-bordered table-striped table-hover">
+    <tr>
+      <th>Quote</th>
+      <th>Made By</th>
+      <th>Likes</th>
+      <th>Created At</th>
+      <th>Action</th>
+    </tr>
+    <tr *ngFor="let q of quotes" class="one-note">
+      <td>{{ q.content }}</td>
+      <td>{{ q.name }}</td>
+      <td>{{ q.likes }}</td>
+      <td>{{ q.createdAt | date: 'medium' }}</td>
+      <td *ngIf="q.name == user">
+        <a class="btn-sm btn-danger" href="delete/{{q._id}}">Delete</a>
+      </td>
+      <td *ngIf="q.name !== user">
+        <a class="btn-sm btn-primary" href="like/{{q._id}}">Like</a>
+      </td>
+    </tr>
+  </table>
 </div>

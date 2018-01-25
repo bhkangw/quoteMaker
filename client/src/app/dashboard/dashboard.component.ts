@@ -11,8 +11,14 @@ import { Quote } from "../quote" // class
 export class DashboardComponent implements OnInit {
   user: string;
   quote: Quote = new Quote();
+  quotes: Array<object> = [];
 
-  constructor(private _dataService: DataService, private _router: Router) { }
+  constructor(private _dataService: DataService, private _router: Router) {
+    this._dataService.quoteObserver.subscribe((quotes) => {
+      this.quotes = quotes;
+    })
+  }
+
   checkSess(){
     this._dataService.checkSess(res => {
       this.user = res;
@@ -33,6 +39,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.checkSess()
+    this._dataService.showAll()
   }
 
 }

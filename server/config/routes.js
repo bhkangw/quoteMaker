@@ -20,6 +20,18 @@ module.exports = function (app) {
 		Quote.addQuote(req, res);
 	})
 
+	app.get("/showAll", function (req, res) {
+		Quote.showAll(req, res);
+	})
+
+	app.get("/delete/:id", function (req, res) {
+		Quote.delete(req, res);
+	})
+
+	app.get("/like/:id", function (req, res) {
+		Quote.like(req, res);
+	})
+
 	app.get("*", function (req, res) {
 		res.sendFile(path.resolve("./client/dist/index.html"));
 	});
